@@ -1,0 +1,20 @@
+{%- import "components/chat_bubble.html" as scope -%}
+{% extends "base.html" %}
+
+{% block title %}Axum chat app{% endblock %}
+
+{% block content %}
+<div hx-ext="ws" ws-connect="/chat" hx-get="/history" hx-trigger="load once" hx-target="#chat_room" hx-swap="afterbegin"
+    class="flex flex-col h-screen border-l border-t border-gray-200 dark:border-gray-800">
+    <div class="flex flex-1 flex-col justify-end min-h-0">
+        <div class="overflow-y-auto scroll-smooth">
+            <div id="chat_room" class="gap-4 px-12 py-4 flex flex-col-reverse justify-end"></div>
+        </div>
+        <div class="border-t grid w-full grid-rows-1 items-center gap-4 px-12 py-8">
+            {% include "components/chat_submit_form.html" %}
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

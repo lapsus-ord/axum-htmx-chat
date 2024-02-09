@@ -1,0 +1,15 @@
+{
+  "name": "axum-htmx",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "watch": "mprocs \"cargo watch -x run\" \"tailwindcss -i ./assets/main.css -o ./build/main.css --watch\""
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "mprocs": "^0.6.4",
+    "tailwindcss": "^3.4.1"
+  }
+}

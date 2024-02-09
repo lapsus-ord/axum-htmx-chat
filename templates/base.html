@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+    <link href="/assets/main.css" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    {% block content %}{% endblock %}
+    <script>
+        // htmx.logAll();
+        document.addEventListener('htmx:wsAfterSend', (evt) => {
+            if (evt.target instanceof HTMLFormElement) {
+                evt.target.reset();
+            }
+        });
+    </script>
+</body>
+
+</html>
