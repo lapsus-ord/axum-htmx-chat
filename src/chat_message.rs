@@ -24,10 +24,6 @@ impl FromStr for ChatMessage {
         let request = serde_json::from_str::<MessageRequest>(json_str)
             .map_err(|e| format!("invalid json body {}", e))?;
 
-        if request.username.is_empty() || request.body.is_empty() {
-            return Err("username or message empty".into());
-        }
-
         Ok(ChatMessage::new(&request.username, &request.body))
     }
 }

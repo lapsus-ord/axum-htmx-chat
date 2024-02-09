@@ -1,6 +1,8 @@
+use std::sync::Arc;
+
 use axum::{routing::get, Router};
 use state::LocalChatState;
-use tokio::net::TcpListener;
+use tokio::{net::TcpListener, sync::broadcast};
 use tower_http::services::ServeDir;
 use tracing::{info, Level};
 use tracing_subscriber::{filter::Targets, prelude::*};
@@ -30,11 +32,14 @@ async fn main() -> Result<(), AppError> {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
+    let (tx, _) = broadcast::channel(100);
+    let app_state = Arc::new(LocalChatState::new(Vec::new(), tx));
+
     let app = Router::new()
         .route("/", get(handlers::pages::index))
         .route("/chat", get(handlers::ws::upgrade_handler))
         .route("/history", get(handlers::rest::chat_history))
-        .with_state(LocalChatState::default())
+        .with_state(app_state)
         .nest_service("/assets", ServeDir::new("build"));
 
     let host = std::env::var("APP_HOST").unwrap_or("0.0.0.0".into());

@@ -1,9 +1,21 @@
 use crate::chat_message::ChatMessage;
-use std::sync::{Arc, Mutex};
+use std::sync::Mutex;
+use tokio::sync::broadcast;
 
-#[derive(Default, Clone)]
 pub struct LocalChatState {
-    messages: Arc<Mutex<Vec<ChatMessage>>>,
+    // history of chat messages
+    messages: Mutex<Vec<ChatMessage>>,
+    // Channel used to send messages to all connected clients.
+    pub tx: broadcast::Sender<ChatMessage>,
+}
+
+impl LocalChatState {
+    pub fn new(messages: Vec<ChatMessage>, tx: broadcast::Sender<ChatMessage>) -> Self {
+        Self {
+            messages: Mutex::new(messages),
+            tx,
+        }
+    }
 }
 
 pub trait ChatState {

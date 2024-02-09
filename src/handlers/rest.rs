@@ -4,8 +4,9 @@ use axum::{
     extract::State,
     response::{Html, IntoResponse},
 };
+use std::sync::Arc;
 
-pub async fn chat_history(State(app_state): State<LocalChatState>) -> impl IntoResponse {
+pub async fn chat_history(State(app_state): State<Arc<LocalChatState>>) -> impl IntoResponse {
     let message_history = app_state
         .get_history(None)
         .iter()
