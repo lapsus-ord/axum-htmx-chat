@@ -1,4 +1,4 @@
-use crate::state::{ChatState, LocalChatState};
+use crate::state::{local::LocalChatState, ChatState};
 use askama::Template;
 use axum::{
     extract::State,

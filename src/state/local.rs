@@ -1,3 +1,4 @@
+use super::ChatState;
 use crate::chat_message::ChatMessage;
 use std::sync::Mutex;
 use tokio::sync::broadcast;
@@ -16,11 +17,6 @@ impl LocalChatState {
             tx,
         }
     }
-}
-
-pub trait ChatState {
-    fn add_message(&self, message: ChatMessage);
-    fn get_history(&self, n: Option<usize>) -> Vec<ChatMessage>;
 }
 
 impl ChatState for LocalChatState {

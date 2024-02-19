@@ -1,6 +1,6 @@
 use crate::{
     chat_message::ChatMessage,
-    state::{ChatState, LocalChatState},
+    state::{local::LocalChatState, ChatState},
 };
 use askama::Template;
 use axum::{
